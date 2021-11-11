@@ -1,4 +1,4 @@
-### Hi there 👋
+### This is Ansible repository 
 
 <!--
 **bhavindave-git/bhavindave-git** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
@@ -6,7 +6,7 @@
 Here are some ideas to get you started:
 
 - 🔭 I’m currently working on ... Ansible
-- 🌱 I’m currently learning ...
+- 🌱 I’m currently learning ... Ansible
 - 👯 I’m looking to collaborate on ...
 - 🤔 I’m looking for help with ...
 - 💬 Ask me about ...
