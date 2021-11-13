@@ -1,0 +1,22 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository
+    yum:
+      update_cache: yes
+    when: ansible_distribution == "Fedora"
+
+  - name: install httpd server
+    yum:
+      name: httpd
+      state: latest
+    when: ansible_distribution == "Fedora"
+
+  - name: install php
+    yum:
+      name: php
+      state: latest
+    when: ansible_distribution == "Fedora"

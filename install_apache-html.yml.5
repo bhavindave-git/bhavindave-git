@@ -5,10 +5,10 @@
   tasks:
 
   - name: install httpd server and php
-    package:
+    yum:
       name:
-        - "{{ var_http_pkg }}"
-        - "{{ var_php_pkg }}"
+        - httpd
+        - php
       state: latest
       update_cache: yes
     when: ansible_distribution == "Fedora"
