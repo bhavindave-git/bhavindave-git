@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository
+    yum:
+      update_cache: yes
+
+  - name: start httpd server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+
+  - name: start php
+    ansible.builtin.service:
+      name: php-fpm
+      state: started
