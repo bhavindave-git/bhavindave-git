@@ -1,0 +1,34 @@
+---
+
+- hosts: db_servers 
+  become: true
+  pre_tasks:
+
+  - name: install mysql
+    dnf:
+      name:
+        - mysql
+      state: latest
+    when: ansible_distribution == "Fedora"
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install httpd server and php
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Fedora"
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+  - name: install file server
+    dnf:
+      name: samba
+      state: latest
