@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Once done with testing, shutting down VMs.
+    command: /sbin/shutdown -h now
+

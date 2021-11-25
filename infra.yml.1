@@ -16,7 +16,6 @@
   tasks:
 
   - name: install httpd server and php
-    tags: php_web
     dnf:
       name:
         - httpd
@@ -25,17 +24,7 @@
       update_cache: yes
     when: ansible_distribution == "Fedora"
 
-  - name: Copy default.html file
-    tags: copy_default_html
-    copy:
-      src: default_site.html
-      dest: /var/www/html/index.html
-      owner: root
-      group: root
-      mode: 0644
-
 - hosts: file_servers
-  tags: files
   become: true
   tasks:
 
