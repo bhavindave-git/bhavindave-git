@@ -25,13 +25,6 @@
       update_cache: yes
     when: ansible_distribution == "Fedora"
 
-  - name: Start httpd services
-    tags: php_web_start
-    service:
-      name: httpd
-      state: started
-      enabled: yes
-
   - name: Copy default.html file
     tags: copy_default_html
     copy:
@@ -58,4 +51,13 @@
   - name: install unzip
     package:
       name: unzip
+
+  - name: install terraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
 
