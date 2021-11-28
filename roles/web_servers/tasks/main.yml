@@ -1,0 +1,26 @@
+- name: install httpd server and php
+  tags: php_web
+  dnf:
+    name:
+      - httpd
+      - php
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == "Fedora"
+
+- name: Start httpd services
+  tags: php_web_start
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Copy default.html file
+  tags: copy_default_html
+  copy:
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644
+

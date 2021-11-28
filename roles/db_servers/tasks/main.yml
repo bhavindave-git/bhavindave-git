@@ -1,0 +1,7 @@
+- name: install mysql
+  dnf:
+    name:
+      - mysql
+    state: latest
+  when: ansible_distribution == "Fedora"
+

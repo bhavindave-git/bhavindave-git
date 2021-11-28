@@ -1,0 +1,83 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: updating cache
+    tags: cache_update
+    dnf:
+      update_cache: yes
+    changed_when: false
+
+- hosts: db_servers 
+  become: true
+  pre_tasks:
+
+  - name: install mysql
+    dnf:
+      name:
+        - mysql
+      state: latest
+    when: ansible_distribution == "Fedora"
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install httpd server and php
+    tags: php_web
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Fedora"
+
+  - name: Start httpd services
+    tags: php_web_start
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
+  - name: Copy default.html file
+    tags: copy_default_html
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+- hosts: file_servers
+  tags: files
+  become: true
+  tasks:
+
+  - name: install file server
+    dnf:
+      name: samba
+      state: latest
+
+- hosts: workstations
+  become: true
+  tasks:
+
+  - name: install unzip
+    package:
+      name: unzip
+
+- hosts: all
+  tags: user_mgmt
+  become: true
+  tasks:
+
+  - name: add ssh keys for user
+    tags: user_mgmt
+    authorized_key:
+      user: mantra
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGbS/Ho/3uxa4NjrcbKr/NXjwcsyvp/65lY3KGUiQh+C Ansibl_nokey"
+
+
