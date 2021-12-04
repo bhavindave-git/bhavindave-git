@@ -2,7 +2,7 @@
 
 - hosts: all
   become: true
-  pre_tasks:
+  tasks:
 
   - name: updating cache
     tags: cache_update
@@ -10,24 +10,35 @@
       update_cache: yes
     changed_when: false
 
-- hosts: all
-  become: true
-  roles:
-    - base
-
-- hosts: db_servers 
-  become: true
-  roles:
-    - db_servers
-
 - hosts: web_servers
   become: true
-  roles:
-    - web_servers
+  tasks:
 
-- hosts: file_servers
-  become: true
-  roles:
-    - file_servers
+  - name: install httpd server and php
+    tags: php_web
+    dnf:
+      name:
+        - "{{ web_package_name }}" 
+        - "{{ php_package_name }}"
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Fedora"
+    register: apache
 
+  - name: Start httpd services
+    tags: php_web_start
+    service:
+      name: "{{ web_service }}"
+      state: started
+      enabled: yes
+    when: apache.changed
+
+  - name: Copy default.html file
+    tags: copy_default_html
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
 

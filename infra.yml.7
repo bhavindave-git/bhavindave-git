@@ -1,0 +1,33 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: updating cache
+    tags: cache_update
+    dnf:
+      update_cache: yes
+    changed_when: false
+
+- hosts: all
+  become: true
+  roles:
+    - base
+
+- hosts: db_servers 
+  become: true
+  roles:
+    - db_servers
+
+- hosts: web_servers
+  become: true
+  roles:
+    - web_servers
+
+- hosts: file_servers
+  become: true
+  roles:
+    - file_servers
+
+

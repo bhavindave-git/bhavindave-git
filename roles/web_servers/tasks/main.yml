@@ -14,12 +14,13 @@
     name: httpd
     state: started
     enabled: yes
+  notify: restart_apache
 
 - name: Copy default.html file
   tags: copy_default_html
   copy:
     src: default_site.html
-    dest: /var/www/html/index.html
+    dest: /var/www/html/index2.html
     owner: root
     group: root
     mode: 0644
