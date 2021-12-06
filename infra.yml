@@ -4,11 +4,6 @@
   become: true
   tasks:
 
-  - name: updating cache
-    tags: cache_update
-    dnf:
-      update_cache: yes
-    changed_when: false
 
 - hosts: web_servers
   become: true

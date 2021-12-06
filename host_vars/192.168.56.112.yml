@@ -1,3 +1,5 @@
 web_package_name: httpd
 web_service: httpd
 php_package_name: php
+ssh_users: "bhavin"
+ssh_template_file: sshd_config.j2
